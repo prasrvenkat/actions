@@ -114537,330 +114537,6 @@ module.exports.setGracefulCleanup = setGracefulCleanup;
 
 /***/ }),
 
-/***/ 93760:
-/***/ ((module) => {
-
-/******************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-/* global global, define, System, Reflect, Promise */
-var __extends;
-var __assign;
-var __rest;
-var __decorate;
-var __param;
-var __metadata;
-var __awaiter;
-var __generator;
-var __exportStar;
-var __values;
-var __read;
-var __spread;
-var __spreadArrays;
-var __spreadArray;
-var __await;
-var __asyncGenerator;
-var __asyncDelegator;
-var __asyncValues;
-var __makeTemplateObject;
-var __importStar;
-var __importDefault;
-var __classPrivateFieldGet;
-var __classPrivateFieldSet;
-var __classPrivateFieldIn;
-var __createBinding;
-(function (factory) {
-    var root = typeof global === "object" ? global : typeof self === "object" ? self : typeof this === "object" ? this : {};
-    if (typeof define === "function" && define.amd) {
-        define("tslib", ["exports"], function (exports) { factory(createExporter(root, createExporter(exports))); });
-    }
-    else if ( true && typeof module.exports === "object") {
-        factory(createExporter(root, createExporter(module.exports)));
-    }
-    else {
-        factory(createExporter(root));
-    }
-    function createExporter(exports, previous) {
-        if (exports !== root) {
-            if (typeof Object.create === "function") {
-                Object.defineProperty(exports, "__esModule", { value: true });
-            }
-            else {
-                exports.__esModule = true;
-            }
-        }
-        return function (id, v) { return exports[id] = previous ? previous(id, v) : v; };
-    }
-})
-(function (exporter) {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-
-    __extends = function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-
-    __assign = Object.assign || function (t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-
-    __rest = function (s, e) {
-        var t = {};
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-            t[p] = s[p];
-        if (s != null && typeof Object.getOwnPropertySymbols === "function")
-            for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-                if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                    t[p[i]] = s[p[i]];
-            }
-        return t;
-    };
-
-    __decorate = function (decorators, target, key, desc) {
-        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-        return c > 3 && r && Object.defineProperty(target, key, r), r;
-    };
-
-    __param = function (paramIndex, decorator) {
-        return function (target, key) { decorator(target, key, paramIndex); }
-    };
-
-    __metadata = function (metadataKey, metadataValue) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
-    };
-
-    __awaiter = function (thisArg, _arguments, P, generator) {
-        function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-        return new (P || (P = Promise))(function (resolve, reject) {
-            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-            function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-            step((generator = generator.apply(thisArg, _arguments || [])).next());
-        });
-    };
-
-    __generator = function (thisArg, body) {
-        var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-        function verb(n) { return function (v) { return step([n, v]); }; }
-        function step(op) {
-            if (f) throw new TypeError("Generator is already executing.");
-            while (_) try {
-                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [op[0] & 2, t.value];
-                switch (op[0]) {
-                    case 0: case 1: t = op; break;
-                    case 4: _.label++; return { value: op[1], done: false };
-                    case 5: _.label++; y = op[1]; op = [0]; continue;
-                    case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                    default:
-                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                        if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                        if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                        if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                        if (t[2]) _.ops.pop();
-                        _.trys.pop(); continue;
-                }
-                op = body.call(thisArg, _);
-            } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-            if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-        }
-    };
-
-    __exportStar = function(m, o) {
-        for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
-    };
-
-    __createBinding = Object.create ? (function(o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
-        if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-            desc = { enumerable: true, get: function() { return m[k]; } };
-        }
-        Object.defineProperty(o, k2, desc);
-    }) : (function(o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        o[k2] = m[k];
-    });
-
-    __values = function (o) {
-        var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-        if (m) return m.call(o);
-        if (o && typeof o.length === "number") return {
-            next: function () {
-                if (o && i >= o.length) o = void 0;
-                return { value: o && o[i++], done: !o };
-            }
-        };
-        throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-    };
-
-    __read = function (o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m) return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-        }
-        catch (error) { e = { error: error }; }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"])) m.call(i);
-            }
-            finally { if (e) throw e.error; }
-        }
-        return ar;
-    };
-
-    /** @deprecated */
-    __spread = function () {
-        for (var ar = [], i = 0; i < arguments.length; i++)
-            ar = ar.concat(__read(arguments[i]));
-        return ar;
-    };
-
-    /** @deprecated */
-    __spreadArrays = function () {
-        for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-        for (var r = Array(s), k = 0, i = 0; i < il; i++)
-            for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-                r[k] = a[j];
-        return r;
-    };
-
-    __spreadArray = function (to, from, pack) {
-        if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-            if (ar || !(i in from)) {
-                if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-                ar[i] = from[i];
-            }
-        }
-        return to.concat(ar || Array.prototype.slice.call(from));
-    };
-
-    __await = function (v) {
-        return this instanceof __await ? (this.v = v, this) : new __await(v);
-    };
-
-    __asyncGenerator = function (thisArg, _arguments, generator) {
-        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-        var g = generator.apply(thisArg, _arguments || []), i, q = [];
-        return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
-        function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
-        function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
-        function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r);  }
-        function fulfill(value) { resume("next", value); }
-        function reject(value) { resume("throw", value); }
-        function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
-    };
-
-    __asyncDelegator = function (o) {
-        var i, p;
-        return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
-        function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
-    };
-
-    __asyncValues = function (o) {
-        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-        var m = o[Symbol.asyncIterator], i;
-        return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
-        function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-        function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
-    };
-
-    __makeTemplateObject = function (cooked, raw) {
-        if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
-        return cooked;
-    };
-
-    var __setModuleDefault = Object.create ? (function(o, v) {
-        Object.defineProperty(o, "default", { enumerable: true, value: v });
-    }) : function(o, v) {
-        o["default"] = v;
-    };
-
-    __importStar = function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-
-    __importDefault = function (mod) {
-        return (mod && mod.__esModule) ? mod : { "default": mod };
-    };
-
-    __classPrivateFieldGet = function (receiver, state, kind, f) {
-        if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-        return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-    };
-
-    __classPrivateFieldSet = function (receiver, state, value, kind, f) {
-        if (kind === "m") throw new TypeError("Private method is not writable");
-        if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-        if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-        return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-    };
-
-    __classPrivateFieldIn = function (state, receiver) {
-        if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function")) throw new TypeError("Cannot use 'in' operator on non-object");
-        return typeof state === "function" ? receiver === state : state.has(receiver);
-    };
-
-    exporter("__extends", __extends);
-    exporter("__assign", __assign);
-    exporter("__rest", __rest);
-    exporter("__decorate", __decorate);
-    exporter("__param", __param);
-    exporter("__metadata", __metadata);
-    exporter("__awaiter", __awaiter);
-    exporter("__generator", __generator);
-    exporter("__exportStar", __exportStar);
-    exporter("__createBinding", __createBinding);
-    exporter("__values", __values);
-    exporter("__read", __read);
-    exporter("__spread", __spread);
-    exporter("__spreadArrays", __spreadArrays);
-    exporter("__spreadArray", __spreadArray);
-    exporter("__await", __await);
-    exporter("__asyncGenerator", __asyncGenerator);
-    exporter("__asyncDelegator", __asyncDelegator);
-    exporter("__asyncValues", __asyncValues);
-    exporter("__makeTemplateObject", __makeTemplateObject);
-    exporter("__importStar", __importStar);
-    exporter("__importDefault", __importDefault);
-    exporter("__classPrivateFieldGet", __classPrivateFieldGet);
-    exporter("__classPrivateFieldSet", __classPrivateFieldSet);
-    exporter("__classPrivateFieldIn", __classPrivateFieldIn);
-});
-
-
-/***/ }),
-
 /***/ 4351:
 /***/ ((module) => {
 
@@ -117983,7 +117659,7 @@ var __webpack_unused_export__;
 
 __webpack_unused_export__ = ({ value: true });
 
-var tslib = __nccwpck_require__(93760);
+var tslib = __nccwpck_require__(4351);
 
 var genericMessage = "Invariant Violation";
 var _a = Object.setPrototypeOf, setPrototypeOf = _a === void 0 ? function (obj, proto) {
@@ -118302,6 +117978,20 @@ function stripAnsiControlCodes(text) {
     const regex_ansi = RegExp(`\x1B(?:[@-Z\\-_]|[[0-?]*[ -/]*[@-~])`, 'g');
     return text.replace(regex_ansi, '');
 }
+/**
+ * Extracts the Pulumi Cloud permalink from command output.
+ * Looks for "View Live: <url>" pattern in the output.
+ * @param output - The Pulumi command output
+ * @returns The permalink URL or empty string if not found
+ */
+function extractViewLiveLink(output) {
+    const lines = output.split('\n');
+    const linkLine = lines.find((line) => line.includes('View Live:'));
+    if (!linkLine) {
+        return '';
+    }
+    return linkLine.split('View Live: ')[1] || '';
+}
 
 ;// CONCATENATED MODULE: ./src/config.ts
 
@@ -118381,6 +118071,8 @@ function makeConfig() {
         configMap: (0,main.getYAMLInput)('config-map'),
         editCommentOnPr: (0,main.getBooleanInput)('edit-pr-comment'),
         alwaysIncludeSummary: (0,main.getBooleanInput)('always-include-summary'),
+        json: (0,main.getBooleanInput)('json'),
+        pretty: (0,main.getBooleanInput)('pretty'),
         options: {
             parallel: (0,main.getNumberInput)('parallel', {}),
             message: (0,main.getInput)('message'),
@@ -118419,10 +118111,338 @@ const environmentVariables = dist.cleanEnv(process.env, {
     GITHUB_WORKSPACE: dist.str(),
 });
 
+;// CONCATENATED MODULE: ./src/libs/events.ts
+/**
+ * Default empty change summary for when no summary event is received.
+ */
+const DEFAULT_CHANGE_SUMMARY = {
+    create: 0,
+    update: 0,
+    delete: 0,
+    replace: 0,
+    same: 0,
+};
+/**
+ * EventCollector collects structured data from Pulumi Automation API events.
+ * It aggregates resource operations, diagnostics, and summary information
+ * into a structured JSON format.
+ */
+class EventCollector {
+    constructor() {
+        this.resources = [];
+        this.diagnostics = [];
+        this.changeSummary = null;
+        /**
+         * Event handler to be passed to Pulumi Automation API operations.
+         * This method is bound to the instance and can be passed directly as a callback.
+         */
+        this.onEvent = (event) => {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+            // Handle resource pre-event (resource about to be modified)
+            if (event.resourcePreEvent) {
+                const meta = event.resourcePreEvent.metadata;
+                this.resources.push({
+                    urn: meta.urn,
+                    name: this.extractName(meta.urn),
+                    type: meta.type,
+                    operation: meta.op,
+                    diffs: meta.diffs,
+                    parent: ((_a = meta.new) === null || _a === void 0 ? void 0 : _a.parent) || ((_b = meta.old) === null || _b === void 0 ? void 0 : _b.parent),
+                });
+            }
+            // Handle diagnostic events (warnings, errors)
+            if (event.diagnosticEvent) {
+                const diag = event.diagnosticEvent;
+                // Filter out 'info' severity to reduce noise
+                if (diag.severity !== 'info') {
+                    this.diagnostics.push({
+                        severity: this.mapSeverity(diag.severity),
+                        message: this.cleanMessage(diag.message),
+                        urn: diag.urn,
+                    });
+                }
+            }
+            // Handle summary event (end of operation)
+            if (event.summaryEvent) {
+                const summary = event.summaryEvent;
+                this.changeSummary = {
+                    create: (_d = (_c = summary.resourceChanges) === null || _c === void 0 ? void 0 : _c.create) !== null && _d !== void 0 ? _d : 0,
+                    update: (_f = (_e = summary.resourceChanges) === null || _e === void 0 ? void 0 : _e.update) !== null && _f !== void 0 ? _f : 0,
+                    delete: (_h = (_g = summary.resourceChanges) === null || _g === void 0 ? void 0 : _g.delete) !== null && _h !== void 0 ? _h : 0,
+                    replace: (_k = (_j = summary.resourceChanges) === null || _j === void 0 ? void 0 : _j.replace) !== null && _k !== void 0 ? _k : 0,
+                    same: (_m = (_l = summary.resourceChanges) === null || _l === void 0 ? void 0 : _l.same) !== null && _m !== void 0 ? _m : 0,
+                };
+                this.duration = summary.durationSeconds;
+            }
+        };
+    }
+    /**
+     * Convert collected events to structured JSON output.
+     * @param result - Whether the operation succeeded or failed
+     * @param permalink - Optional permalink to Pulumi Cloud
+     */
+    toJson(result, permalink) {
+        var _a;
+        return {
+            result,
+            changeSummary: (_a = this.changeSummary) !== null && _a !== void 0 ? _a : DEFAULT_CHANGE_SUMMARY,
+            resources: this.resources,
+            diagnostics: this.diagnostics,
+            durationSeconds: this.duration,
+            permalink,
+        };
+    }
+    /**
+     * Extract resource name from URN.
+     * URN format: urn:pulumi:stack::project::type::name
+     * @param urn - The full URN string
+     * @returns The resource name (last segment after ::)
+     */
+    extractName(urn) {
+        const parts = urn.split('::');
+        return parts[parts.length - 1] || urn;
+    }
+    /**
+     * Map Pulumi severity strings to our simplified severity type.
+     * Pulumi uses: 'info' | 'info#err' | 'warning' | 'error'
+     * @param severity - The Pulumi severity string
+     */
+    mapSeverity(severity) {
+        if (severity === 'error' || severity === 'info#err') {
+            return 'error';
+        }
+        if (severity === 'warning') {
+            return 'warning';
+        }
+        return 'info';
+    }
+    /**
+     * Clean diagnostic message by removing ANSI codes and trimming whitespace.
+     * @param message - The raw diagnostic message
+     */
+    cleanMessage(message) {
+        // Remove ANSI escape codes
+        // eslint-disable-next-line no-control-regex
+        const ansiRegex = /\x1B(?:[@-Z\\-_]|[[0-?]*[ -/]*[@-~])/g;
+        return message.replace(ansiRegex, '').trim();
+    }
+}
+
 // EXTERNAL MODULE: ./node_modules/dedent/dist/dedent.js
 var dedent = __nccwpck_require__(35281);
 var dedent_default = /*#__PURE__*/__nccwpck_require__.n(dedent);
+;// CONCATENATED MODULE: ./src/libs/formatter.ts
+/**
+ * Colored circle emoji icons for resource operations.
+ */
+const OP_EMOJI = {
+    create: '🟢',
+    update: '🟡',
+    delete: '🔴',
+    replace: '🟣',
+    same: '⚪',
+    'create-replacement': '🟣',
+    'delete-replaced': '🟣',
+    read: '🔵',
+};
+/**
+ * Result status emojis.
+ */
+const RESULT_EMOJI = {
+    succeeded: '✅',
+    failed: '❌',
+};
+/**
+ * Command display names (capitalized for headers).
+ */
+const COMMAND_DISPLAY = {
+    preview: 'Preview',
+    up: 'Update',
+    update: 'Update',
+    refresh: 'Refresh',
+    destroy: 'Destroy',
+};
+/**
+ * Maximum number of resources to show in the tree.
+ */
+const MAX_RESOURCES_TO_SHOW = 50;
+/**
+ * Format Pulumi output as styled markdown for GitHub PR comments and summaries.
+ *
+ * @param data - The structured Pulumi output JSON
+ * @param command - The Pulumi command that was run (preview, up, etc.)
+ * @param stackName - The name of the stack
+ * @returns Formatted markdown string
+ */
+function formatAsMarkdown(data, command, stackName) {
+    const lines = [];
+    // Header with result emoji and command
+    const resultEmoji = RESULT_EMOJI[data.result] || '';
+    const commandDisplay = COMMAND_DISPLAY[command] || command;
+    lines.push(`## ${resultEmoji} Pulumi ${commandDisplay}: \`${stackName}\``);
+    lines.push('');
+    // Change summary table
+    lines.push(formatChangeSummaryTable(data.changeSummary));
+    lines.push('');
+    // Duration and permalink on same line if both available
+    const metaLine = [];
+    if (data.durationSeconds !== undefined) {
+        metaLine.push(`⏱️ **Duration**: ${formatDuration(data.durationSeconds)}`);
+    }
+    if (data.permalink) {
+        metaLine.push(`🔗 [View in Pulumi Cloud](${data.permalink})`);
+    }
+    if (metaLine.length > 0) {
+        lines.push(metaLine.join(' · '));
+        lines.push('');
+    }
+    // Diagnostics (grouped by severity) using GitHub Alerts - show early for visibility
+    const warnings = data.diagnostics.filter(d => d.severity === 'warning');
+    const errors = data.diagnostics.filter(d => d.severity === 'error');
+    // Errors first (more critical)
+    if (errors.length > 0) {
+        lines.push(formatDiagnosticGroup(errors, 'CAUTION'));
+        lines.push('');
+    }
+    // Then warnings
+    if (warnings.length > 0) {
+        lines.push(formatDiagnosticGroup(warnings, 'WARNING'));
+        lines.push('');
+    }
+    // Resource changes tree (only non-same operations)
+    const changedResources = data.resources.filter(r => r.operation !== 'same');
+    if (changedResources.length > 0) {
+        lines.push('### Resource Changes');
+        lines.push('');
+        lines.push(formatResourceTree(data.resources));
+        lines.push('');
+    }
+    return lines.join('\n').trim();
+}
+/**
+ * Format the change summary as a markdown table.
+ */
+function formatChangeSummaryTable(summary) {
+    const lines = [];
+    lines.push(`| ${OP_EMOJI.create} Create | ${OP_EMOJI.update} Update | ${OP_EMOJI.delete} Delete | ${OP_EMOJI.replace} Replace | ${OP_EMOJI.same} Same |`);
+    lines.push('|----------|----------|----------|-----------|------|');
+    lines.push(`| ${summary.create} | ${summary.update} | ${summary.delete} | ${summary.replace} | ${summary.same} |`);
+    return lines.join('\n');
+}
+/**
+ * Build a tree structure from flat resource list using parent references.
+ */
+function buildTree(resources) {
+    const nodeMap = new Map();
+    const roots = [];
+    // Create nodes for all resources
+    for (const resource of resources) {
+        nodeMap.set(resource.urn, { resource, children: [] });
+    }
+    // Build parent-child relationships
+    for (const resource of resources) {
+        const node = nodeMap.get(resource.urn);
+        if (resource.parent && nodeMap.has(resource.parent)) {
+            nodeMap.get(resource.parent).children.push(node);
+        }
+        else {
+            roots.push(node);
+        }
+    }
+    return roots;
+}
+/**
+ * Format resources as a tree view with emoji indicators.
+ */
+function formatResourceTree(resources) {
+    const tree = buildTree(resources);
+    const lines = ['```'];
+    let count = 0;
+    function renderNode(node, prefix, isLast, isRoot) {
+        if (count >= MAX_RESOURCES_TO_SHOW)
+            return;
+        const resource = node.resource;
+        const emoji = resource.operation === 'same' ? '  ' : OP_EMOJI[resource.operation] || '  ';
+        const connector = isRoot ? '' : (isLast ? '└── ' : '├── ');
+        const displayName = `${resource.type} ${resource.name}`;
+        // Only show changed resources, but traverse all to maintain tree structure
+        if (resource.operation !== 'same') {
+            lines.push(`${emoji} ${prefix}${connector}${displayName}`);
+            count++;
+        }
+        else if (hasChangedDescendants(node)) {
+            // Show unchanged parents if they have changed children
+            lines.push(`   ${prefix}${connector}${displayName}`);
+            count++;
+        }
+        // Render children
+        const childPrefix = isRoot ? '' : prefix + (isLast ? '    ' : '│   ');
+        const visibleChildren = node.children.filter(c => c.resource.operation !== 'same' || hasChangedDescendants(c));
+        visibleChildren.forEach((child, index) => {
+            const isLastChild = index === visibleChildren.length - 1;
+            renderNode(child, childPrefix, isLastChild, false);
+        });
+    }
+    // Check if a node has any changed descendants
+    function hasChangedDescendants(node) {
+        if (node.resource.operation !== 'same')
+            return true;
+        return node.children.some(child => hasChangedDescendants(child));
+    }
+    // Render all root nodes
+    tree.forEach((root, index) => {
+        const isLast = index === tree.length - 1;
+        renderNode(root, '', isLast, true);
+    });
+    // Show truncation message if needed
+    const totalChanged = resources.filter(r => r.operation !== 'same').length;
+    if (totalChanged > MAX_RESOURCES_TO_SHOW) {
+        lines.push(`   ... and ${totalChanged - MAX_RESOURCES_TO_SHOW} more resources`);
+    }
+    lines.push('```');
+    return lines.join('\n');
+}
+/**
+ * Format a group of diagnostics using GitHub Alert syntax.
+ */
+function formatDiagnosticGroup(diagnostics, alertType) {
+    const lines = [];
+    lines.push(`> [!${alertType}]`);
+    for (const diagnostic of diagnostics) {
+        if (diagnostic.urn) {
+            const resourceName = extractResourceName(diagnostic.urn);
+            lines.push(`> - \`${resourceName}\`: ${diagnostic.message}`);
+        }
+        else {
+            lines.push(`> - ${diagnostic.message}`);
+        }
+    }
+    return lines.join('\n');
+}
+/**
+ * Format duration in seconds to a human-readable string.
+ */
+function formatDuration(seconds) {
+    if (seconds < 60) {
+        return `${Math.round(seconds)}s`;
+    }
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.round(seconds % 60);
+    if (remainingSeconds === 0) {
+        return `${minutes}m`;
+    }
+    return `${minutes}m ${remainingSeconds}s`;
+}
+/**
+ * Extract resource name from URN.
+ */
+function extractResourceName(urn) {
+    const parts = urn.split('::');
+    return parts[parts.length - 1] || urn;
+}
+
 ;// CONCATENATED MODULE: ./src/libs/pr.ts
+
 
 
 
@@ -118453,49 +118473,61 @@ function trimOutputByCharacters(message, maxLength, alwaysIncludeSummary) {
     }
     return [message, trimmed];
 }
-function extractViewLiveLink(output) {
-    /**
-     *  Extracts the Pulumi preview link from the output
-     *  output: pulumi preview output
-     *
-     *  return link to the Pulumi preview
-     */
-    const lines = output.split('\n');
-    const linkLine = lines.find((line) => line.includes('View Live:'));
-    if (!linkLine) {
-        return '';
-    }
-    return linkLine.split('View Live: ')[1];
-}
-function handlePullRequestMessage(config, projectName, output) {
+function handlePullRequestMessage(config, projectName, output, jsonOutput) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
-        const { githubToken, command, stackName, editCommentOnPr, alwaysIncludeSummary, } = config;
+        const { githubToken, command, stackName, editCommentOnPr, alwaysIncludeSummary, pretty, } = config;
         // Remove ANSI symbols from output because they are not supported in GitHub PR message
         output = stripAnsiControlCodes(output);
         // GitHub limits PR comment characters to 65_535, use lower max to keep buffer for variable values
         const MAX_CHARACTER_COMMENT = 64000;
-        const heading = `#### :tropical_drink: \`${command}\` on ${projectName}/${stackName}`;
-        const summary = '<summary>Pulumi report</summary>';
-        const [message, trimmed] = trimOutputByCharacters(output, MAX_CHARACTER_COMMENT, alwaysIncludeSummary);
-        const viewLiveLink = extractViewLiveLink(output);
-        const body = (dedent_default()) `
-    ${heading}
+        let body;
+        let heading;
+        let summary;
+        // Use pretty formatting if enabled and jsonOutput is available
+        if (pretty && jsonOutput) {
+            const formatted = formatAsMarkdown(jsonOutput, command, stackName);
+            // For pretty output, we use a different heading/summary for edit detection
+            heading = `## ${jsonOutput.result === 'succeeded' ? '✅' : '❌'} Pulumi`;
+            summary = '<summary>Raw Output</summary>';
+            // Trim raw output for the collapsible section
+            const [trimmedOutput, wasTrimmed] = trimOutputByCharacters(output, MAX_CHARACTER_COMMENT - formatted.length - 200, alwaysIncludeSummary);
+            body = (dedent_default()) `
+      ${formatted}
 
-    <details>
-    ${summary}
-    ${viewLiveLink ? `\n[View in Pulumi Cloud](${viewLiveLink})\n` : ''}
-    ${trimmed && alwaysIncludeSummary
-            ? ':warning: **Warn**: The output was too long and trimmed from the front.'
-            : ''}
-    <pre>
-    ${message}
-    </pre>
-    ${trimmed && !alwaysIncludeSummary
-            ? ':warning: **Warn**: The output was too long and trimmed.'
-            : ''}
-    </details>
-  `;
+      <details>
+      ${summary}
+
+      ${wasTrimmed ? ':warning: Raw output was truncated.\n' : ''}\`\`\`
+      ${trimmedOutput}
+      \`\`\`
+      </details>
+    `;
+        }
+        else {
+            // Existing behavior: raw output
+            heading = `#### :tropical_drink: \`${command}\` on ${projectName}/${stackName}`;
+            summary = '<summary>Pulumi report</summary>';
+            const [message, trimmed] = trimOutputByCharacters(output, MAX_CHARACTER_COMMENT, alwaysIncludeSummary);
+            const viewLiveLink = extractViewLiveLink(output);
+            body = (dedent_default()) `
+      ${heading}
+
+      <details>
+      ${summary}
+      ${viewLiveLink ? `\n[View in Pulumi Cloud](${viewLiveLink})\n` : ''}
+      ${trimmed && alwaysIncludeSummary
+                ? ':warning: **Warn**: The output was too long and trimmed from the front.'
+                : ''}
+      <pre>
+      ${message}
+      </pre>
+      ${trimmed && !alwaysIncludeSummary
+                ? ':warning: **Warn**: The output was too long and trimmed.'
+                : ''}
+      </details>
+    `;
+        }
         const { payload, repo } = github.context;
         // Assumes PR numbers are always positive.
         const nr = config.commentOnPrNumber || ((_a = payload.pull_request) === null || _a === void 0 ? void 0 : _a.number);
@@ -118908,6 +118940,7 @@ function downloadCli(range) {
 
 
 
+
 function trimOutputByBytes(message, maxSize, alwaysIncludeSummary) {
     /**
      *  Trim message to maxSize in bytes
@@ -118933,27 +118966,47 @@ function trimOutputByBytes(message, maxSize, alwaysIncludeSummary) {
     }
     return [message, trimmed];
 }
-function handleSummaryMessage(config, projectName, output) {
+function handleSummaryMessage(config, projectName, output, jsonOutput) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { stackName, alwaysIncludeSummary, } = config;
+        const { command, stackName, alwaysIncludeSummary, pretty, } = config;
         // Remove ANSI symbols from output because they are not supported in GitHub step Summary
         output = stripAnsiControlCodes(output);
-        // Replace the first leading space in each line with a non-breaking space character to preserve the formatting
-        const regex_space = RegExp(`^[ ]`, 'gm');
-        output = output.replace(regex_space, '&nbsp;');
         // GitHub limits step Summary to 1 MiB (1_048_576 bytes), use lower max to keep buffer for variable values
         const MAX_SUMMARY_SIZE_BYTES = 1000000;
-        const [message, trimmed] = trimOutputByBytes(output, MAX_SUMMARY_SIZE_BYTES, alwaysIncludeSummary);
-        let heading = `Pulumi ${projectName}/${stackName} results`;
-        if (trimmed && alwaysIncludeSummary) {
-            heading += ' :warning: **Warn**: The output was too long and trimmed from the front.';
+        // Use pretty formatting if enabled and jsonOutput is available
+        if (pretty && jsonOutput) {
+            const formatted = formatAsMarkdown(jsonOutput, command, stackName);
+            // Replace the first leading space in each line with a non-breaking space character to preserve the formatting
+            const regex_space = RegExp(`^[ ]`, 'gm');
+            const rawOutput = output.replace(regex_space, '&nbsp;');
+            // Calculate remaining space for raw output
+            const formattedSize = Buffer.byteLength(formatted, 'utf8');
+            const remainingSize = MAX_SUMMARY_SIZE_BYTES - formattedSize - 500; // Buffer for details wrapper
+            const [trimmedRaw, wasTrimmed] = trimOutputByBytes(rawOutput, Math.max(remainingSize, 10000), alwaysIncludeSummary);
+            yield core.summary.addRaw(formatted)
+                .addRaw('\n\n<details>\n<summary>Raw Output</summary>\n\n')
+                .addRaw(wasTrimmed ? ':warning: Raw output was truncated.\n\n' : '')
+                .addCodeBlock(trimmedRaw, "diff")
+                .addRaw('\n</details>')
+                .write();
         }
-        else if (trimmed && !alwaysIncludeSummary) {
-            heading += ' :warning: **Warn**: The output was too long and trimmed.';
+        else {
+            // Existing behavior: raw output
+            // Replace the first leading space in each line with a non-breaking space character to preserve the formatting
+            const regex_space = RegExp(`^[ ]`, 'gm');
+            output = output.replace(regex_space, '&nbsp;');
+            const [message, trimmed] = trimOutputByBytes(output, MAX_SUMMARY_SIZE_BYTES, alwaysIncludeSummary);
+            let heading = `Pulumi ${projectName}/${stackName} results`;
+            if (trimmed && alwaysIncludeSummary) {
+                heading += ' :warning: **Warn**: The output was too long and trimmed from the front.';
+            }
+            else if (trimmed && !alwaysIncludeSummary) {
+                heading += ' :warning: **Warn**: The output was too long and trimmed.';
+            }
+            yield core.summary.addHeading(heading)
+                .addCodeBlock(message, "diff")
+                .write();
         }
-        yield core.summary.addHeading(heading)
-            .addCodeBlock(message, "diff")
-            .write();
     });
 }
 
@@ -118971,6 +119024,8 @@ const login = (workDir, cloudUrl) => __awaiter(void 0, void 0, void 0, function*
 });
 
 ;// CONCATENATED MODULE: ./src/main.ts
+
+
 
 
 
@@ -119042,14 +119097,21 @@ const runAction = (config) => __awaiter(void 0, void 0, void 0, function* () {
     if (stack && config.configMap) {
         yield stack.setAllConfig(config.configMap);
     }
+    // Create event collector if json or pretty output is enabled
+    // pretty implies json (event collection)
+    const collectEvents = config.json || config.pretty;
+    let eventCollector;
+    if (collectEvents && config.command !== 'output') {
+        eventCollector = new EventCollector();
+    }
     core.startGroup(`pulumi ${config.command} on ${config.stackName}`);
     const actions = {
-        up: () => stack.up(Object.assign({ onOutput }, config.options)).then((r) => [r.stdout, r.stderr]),
-        update: () => stack.up(Object.assign({ onOutput }, config.options)).then((r) => [r.stdout, r.stderr]),
-        refresh: () => stack.refresh(Object.assign({ onOutput }, config.options)).then((r) => [r.stdout, r.stderr]),
-        destroy: () => stack.destroy(Object.assign({ onOutput }, config.options)).then((r) => [r.stdout, r.stderr]),
+        up: () => stack.up(Object.assign({ onOutput, onEvent: eventCollector === null || eventCollector === void 0 ? void 0 : eventCollector.onEvent }, config.options)).then((r) => [r.stdout, r.stderr]),
+        update: () => stack.up(Object.assign({ onOutput, onEvent: eventCollector === null || eventCollector === void 0 ? void 0 : eventCollector.onEvent }, config.options)).then((r) => [r.stdout, r.stderr]),
+        refresh: () => stack.refresh(Object.assign({ onOutput, onEvent: eventCollector === null || eventCollector === void 0 ? void 0 : eventCollector.onEvent }, config.options)).then((r) => [r.stdout, r.stderr]),
+        destroy: () => stack.destroy(Object.assign({ onOutput, onEvent: eventCollector === null || eventCollector === void 0 ? void 0 : eventCollector.onEvent }, config.options)).then((r) => [r.stdout, r.stderr]),
         preview: () => __awaiter(void 0, void 0, void 0, function* () {
-            const { stdout, stderr } = yield stack.preview(config.options);
+            const { stdout, stderr } = yield stack.preview(Object.assign(Object.assign({}, config.options), { onEvent: eventCollector === null || eventCollector === void 0 ? void 0 : eventCollector.onEvent }));
             onOutput(stdout);
             onOutput(stderr);
             return [stdout, stderr];
@@ -119068,6 +119130,15 @@ const runAction = (config) => __awaiter(void 0, void 0, void 0, function* () {
         }
     }
     core.setOutput('output', stdout);
+    // Build JSON output if event collection was enabled
+    let jsonOutput;
+    if (eventCollector) {
+        const permalink = extractViewLiveLink(stdout);
+        // Determine result based on whether the command threw an error
+        // If we got here without throwing, it succeeded
+        jsonOutput = eventCollector.toJson('succeeded', permalink || undefined);
+        core.setOutput('output-json', JSON.stringify(jsonOutput));
+    }
     let outputs;
     if (config.command === "output") {
         // When the command is `output` we didn't initialize `stack`, because we
@@ -119095,10 +119166,10 @@ const runAction = (config) => __awaiter(void 0, void 0, void 0, function* () {
             (config.commentOnPr && isPullRequest)) {
             core.debug(`Commenting on pull request`);
             (0,invariant/* default */.ZP)(config.githubToken, 'github-token is missing.');
-            handlePullRequestMessage(config, projectName, stdout);
+            handlePullRequestMessage(config, projectName, stdout, jsonOutput);
         }
         if (config.commentOnSummary) {
-            handleSummaryMessage(config, projectName, stdout);
+            handleSummaryMessage(config, projectName, stdout, jsonOutput);
         }
     }
     if (config.remove && config.command === 'destroy') {
