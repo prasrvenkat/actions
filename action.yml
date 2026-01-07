@@ -136,9 +136,19 @@ inputs:
     description: 'Print detailed debugging output during resource operations'
     required: false
     default: 'false'
+  json:
+    description: 'Emit structured JSON output as `output-json`. Enables event collection for resource changes, diagnostics, and summary.'
+    required: false
+    default: 'false'
+  pretty:
+    description: 'Format PR comments and job summaries as styled markdown tables with emojis. Implies json: true.'
+    required: false
+    default: 'false'
 outputs:
   output:
     description: Output from running command
+  output-json:
+    description: 'Structured JSON output with resource changes, diagnostics, and summary. Only available when json or pretty is enabled.'
 runs:
   # TODO upgrade to node16 by 1 Nov 2022.
   #

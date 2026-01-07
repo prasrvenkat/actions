@@ -1,5 +1,7 @@
 import * as core from '@actions/core';
 import { Config } from '../config';
+import { PulumiOutputJson } from './events';
+import { formatAsMarkdown } from './formatter';
 import { stripAnsiControlCodes } from './utils';
 
 function trimOutputByBytes(
@@ -41,34 +43,61 @@ export async function handleSummaryMessage(
   config: Config,
   projectName: string,
   output: string,
+  jsonOutput?: PulumiOutputJson,
 ): Promise<void> {
   const {
+    command,
     stackName,
     alwaysIncludeSummary,
+    pretty,
   } = config;
 
   // Remove ANSI symbols from output because they are not supported in GitHub step Summary
   output = stripAnsiControlCodes(output);
 
-  // Replace the first leading space in each line with a non-breaking space character to preserve the formatting
-  const regex_space = RegExp(`^[ ]`, 'gm');
-  output = output.replace(regex_space, '&nbsp;');
-
   // GitHub limits step Summary to 1 MiB (1_048_576 bytes), use lower max to keep buffer for variable values
   const MAX_SUMMARY_SIZE_BYTES = 1_000_000;
 
-  const [message, trimmed]: [string, boolean] = trimOutputByBytes(output, MAX_SUMMARY_SIZE_BYTES, alwaysIncludeSummary);
+  // Use pretty formatting if enabled and jsonOutput is available
+  if (pretty && jsonOutput) {
+    const formatted = formatAsMarkdown(jsonOutput, command, stackName);
 
-  let heading = `Pulumi ${projectName}/${stackName} results`;
+    // Replace the first leading space in each line with a non-breaking space character to preserve the formatting
+    const regex_space = RegExp(`^[ ]`, 'gm');
+    const rawOutput = output.replace(regex_space, '&nbsp;');
 
-  if (trimmed && alwaysIncludeSummary) {
-    heading += ' :warning: **Warn**: The output was too long and trimmed from the front.';
-  } else if (trimmed && !alwaysIncludeSummary) {
-    heading += ' :warning: **Warn**: The output was too long and trimmed.';
+    // Calculate remaining space for raw output
+    const formattedSize = Buffer.byteLength(formatted, 'utf8');
+    const remainingSize = MAX_SUMMARY_SIZE_BYTES - formattedSize - 500; // Buffer for details wrapper
+
+    const [trimmedRaw, wasTrimmed] = trimOutputByBytes(rawOutput, Math.max(remainingSize, 10000), alwaysIncludeSummary);
+
+    await core.summary
+      .addRaw(formatted)
+      .addRaw('\n\n<details>\n<summary>Raw Output</summary>\n\n')
+      .addRaw(wasTrimmed ? ':warning: Raw output was truncated.\n\n' : '')
+      .addCodeBlock(trimmedRaw, "diff")
+      .addRaw('\n</details>')
+      .write();
+  } else {
+    // Existing behavior: raw output
+    // Replace the first leading space in each line with a non-breaking space character to preserve the formatting
+    const regex_space = RegExp(`^[ ]`, 'gm');
+    output = output.replace(regex_space, '&nbsp;');
+
+    const [message, trimmed]: [string, boolean] = trimOutputByBytes(output, MAX_SUMMARY_SIZE_BYTES, alwaysIncludeSummary);
+
+    let heading = `Pulumi ${projectName}/${stackName} results`;
+
+    if (trimmed && alwaysIncludeSummary) {
+      heading += ' :warning: **Warn**: The output was too long and trimmed from the front.';
+    } else if (trimmed && !alwaysIncludeSummary) {
+      heading += ' :warning: **Warn**: The output was too long and trimmed.';
+    }
+
+    await core.summary
+      .addHeading(heading)
+      .addCodeBlock(message, "diff")
+      .write();
   }
-
-  await core.summary
-    .addHeading(heading)
-    .addCodeBlock(message, "diff")
-    .write();
 }

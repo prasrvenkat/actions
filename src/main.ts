@@ -17,9 +17,11 @@ import {
   makeInstallationConfig,
 } from './config';
 import { environmentVariables } from './libs/envs';
+import { EventCollector, PulumiOutputJson } from './libs/events';
 import { handlePullRequestMessage } from './libs/pr';
 import * as pulumiCli from './libs/pulumi-cli';
 import { handleSummaryMessage } from './libs/summary';
+import { extractViewLiveLink } from './libs/utils';
 import { login } from './login';
 
 const main = async () => {
@@ -96,19 +98,42 @@ const runAction = async (config: Config): Promise<void> => {
     await stack.setAllConfig(config.configMap);
   }
 
+  // Create event collector if json or pretty output is enabled
+  // pretty implies json (event collection)
+  const collectEvents = config.json || config.pretty;
+  let eventCollector: EventCollector | undefined;
+  if (collectEvents && config.command !== 'output') {
+    eventCollector = new EventCollector();
+  }
 
   core.startGroup(`pulumi ${config.command} on ${config.stackName}`);
 
   const actions: Record<Commands, () => Promise<[string, string]>> = {
-    up: () => stack.up({ onOutput, ...config.options }).then((r) => [r.stdout, r.stderr]),
-    update: () =>
-      stack.up({ onOutput, ...config.options }).then((r) => [r.stdout, r.stderr]),
-    refresh: () =>
-      stack.refresh({ onOutput, ...config.options }).then((r) => [r.stdout, r.stderr]),
-    destroy: () =>
-      stack.destroy({ onOutput, ...config.options }).then((r) => [r.stdout, r.stderr]),
+    up: () => stack.up({
+      onOutput,
+      onEvent: eventCollector?.onEvent,
+      ...config.options,
+    }).then((r) => [r.stdout, r.stderr]),
+    update: () => stack.up({
+      onOutput,
+      onEvent: eventCollector?.onEvent,
+      ...config.options,
+    }).then((r) => [r.stdout, r.stderr]),
+    refresh: () => stack.refresh({
+      onOutput,
+      onEvent: eventCollector?.onEvent,
+      ...config.options,
+    }).then((r) => [r.stdout, r.stderr]),
+    destroy: () => stack.destroy({
+      onOutput,
+      onEvent: eventCollector?.onEvent,
+      ...config.options,
+    }).then((r) => [r.stdout, r.stderr]),
     preview: async () => {
-      const { stdout, stderr } = await stack.preview(config.options);
+      const { stdout, stderr } = await stack.preview({
+        ...config.options,
+        onEvent: eventCollector?.onEvent,
+      });
       onOutput(stdout);
       onOutput(stderr);
       return [stdout, stderr];
@@ -128,6 +153,16 @@ const runAction = async (config: Config): Promise<void> => {
   }
 
   core.setOutput('output', stdout);
+
+  // Build JSON output if event collection was enabled
+  let jsonOutput: PulumiOutputJson | undefined;
+  if (eventCollector) {
+    const permalink = extractViewLiveLink(stdout);
+    // Determine result based on whether the command threw an error
+    // If we got here without throwing, it succeeded
+    jsonOutput = eventCollector.toJson('succeeded', permalink || undefined);
+    core.setOutput('output-json', JSON.stringify(jsonOutput));
+  }
 
   let outputs: OutputMap;
   if (config.command === "output") {
@@ -157,11 +192,11 @@ const runAction = async (config: Config): Promise<void> => {
       (config.commentOnPr && isPullRequest)) {
       core.debug(`Commenting on pull request`);
       invariant(config.githubToken, 'github-token is missing.');
-      handlePullRequestMessage(config, projectName, stdout);
+      handlePullRequestMessage(config, projectName, stdout, jsonOutput);
     }
 
     if (config.commentOnSummary) {
-      handleSummaryMessage(config, projectName, stdout)
+      handleSummaryMessage(config, projectName, stdout, jsonOutput);
     }
   }
 
