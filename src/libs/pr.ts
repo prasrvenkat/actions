@@ -3,7 +3,9 @@ import { context, getOctokit } from '@actions/github';
 import dedent from 'dedent';
 import invariant from 'ts-invariant';
 import { Config } from '../config';
-import { stripAnsiControlCodes } from './utils';
+import { PulumiOutputJson } from './events';
+import { formatAsMarkdown } from './formatter';
+import { extractViewLiveLink, stripAnsiControlCodes } from './utils';
 
 function trimOutputByCharacters(
   message: string,
@@ -38,25 +40,11 @@ function trimOutputByCharacters(
   return [message, trimmed];
 }
 
-function extractViewLiveLink(output: string) {
-  /**
-   *  Extracts the Pulumi preview link from the output
-   *  output: pulumi preview output
-   *
-   *  return link to the Pulumi preview
-   */
-  const lines = output.split('\n');
-  const linkLine = lines.find((line) => line.includes('View Live:'));
-  if (!linkLine) {
-    return '';
-  }
-  return linkLine.split('View Live: ')[1];
-}
-
 export async function handlePullRequestMessage(
   config: Config,
   projectName: string,
   output: string,
+  jsonOutput?: PulumiOutputJson,
 ): Promise<void> {
   const {
     githubToken,
@@ -64,6 +52,7 @@ export async function handlePullRequestMessage(
     stackName,
     editCommentOnPr,
     alwaysIncludeSummary,
+    pretty,
   } = config;
 
   // Remove ANSI symbols from output because they are not supported in GitHub PR message
@@ -72,33 +61,61 @@ export async function handlePullRequestMessage(
   // GitHub limits PR comment characters to 65_535, use lower max to keep buffer for variable values
   const MAX_CHARACTER_COMMENT = 64_000;
 
-  const heading = `#### :tropical_drink: \`${command}\` on ${projectName}/${stackName}`;
+  let body: string;
+  let heading: string;
+  let summary: string;
 
-  const summary = '<summary>Pulumi report</summary>';
+  // Use pretty formatting if enabled and jsonOutput is available
+  if (pretty && jsonOutput) {
+    const formatted = formatAsMarkdown(jsonOutput, command, stackName);
 
-  const [message, trimmed]: [string, boolean] = trimOutputByCharacters(output, MAX_CHARACTER_COMMENT, alwaysIncludeSummary);
+    // For pretty output, we use a different heading/summary for edit detection
+    heading = `## ${jsonOutput.result === 'succeeded' ? '✅' : '❌'} Pulumi`;
+    summary = '<summary>Raw Output</summary>';
 
-  const viewLiveLink = extractViewLiveLink(output);
+    // Trim raw output for the collapsible section
+    const [trimmedOutput, wasTrimmed] = trimOutputByCharacters(output, MAX_CHARACTER_COMMENT - formatted.length - 200, alwaysIncludeSummary);
 
-  const body = dedent`
-    ${heading}
+    body = dedent`
+      ${formatted}
 
-    <details>
-    ${summary}
-    ${viewLiveLink ? `\n[View in Pulumi Cloud](${viewLiveLink})\n` : ''}
-    ${trimmed && alwaysIncludeSummary
-      ? ':warning: **Warn**: The output was too long and trimmed from the front.'
-      : ''
-    }
-    <pre>
-    ${message}
-    </pre>
-    ${trimmed && !alwaysIncludeSummary
-      ? ':warning: **Warn**: The output was too long and trimmed.'
-      : ''
-    }
-    </details>
-  `;
+      <details>
+      ${summary}
+
+      ${wasTrimmed ? ':warning: Raw output was truncated.\n' : ''}\`\`\`
+      ${trimmedOutput}
+      \`\`\`
+      </details>
+    `;
+  } else {
+    // Existing behavior: raw output
+    heading = `#### :tropical_drink: \`${command}\` on ${projectName}/${stackName}`;
+    summary = '<summary>Pulumi report</summary>';
+
+    const [message, trimmed]: [string, boolean] = trimOutputByCharacters(output, MAX_CHARACTER_COMMENT, alwaysIncludeSummary);
+
+    const viewLiveLink = extractViewLiveLink(output);
+
+    body = dedent`
+      ${heading}
+
+      <details>
+      ${summary}
+      ${viewLiveLink ? `\n[View in Pulumi Cloud](${viewLiveLink})\n` : ''}
+      ${trimmed && alwaysIncludeSummary
+        ? ':warning: **Warn**: The output was too long and trimmed from the front.'
+        : ''
+      }
+      <pre>
+      ${message}
+      </pre>
+      ${trimmed && !alwaysIncludeSummary
+        ? ':warning: **Warn**: The output was too long and trimmed.'
+        : ''
+      }
+      </details>
+    `;
+  }
 
   const { payload, repo } = context;
   // Assumes PR numbers are always positive.
