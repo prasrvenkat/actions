@@ -26,6 +26,8 @@ const defaultConfig: Record<string, string> = {
   'log-verbosity': '',
   'log-flow': 'false',
   'debug': 'false',
+  'json': 'false',
+  'pretty': 'false',
 };
 
 function setupMockedConfig(config: Record<string, string>) {
@@ -54,6 +56,7 @@ describe('config.ts', () => {
         "configMap": undefined,
         "editCommentOnPr": false,
         "githubToken": "n/a",
+        "json": false,
         "options": Object {
           "color": undefined,
           "continueOnError": false,
@@ -79,6 +82,7 @@ describe('config.ts', () => {
           "targetDependents": false,
           "userAgent": "pulumi/actions@v6",
         },
+        "pretty": false,
         "pulumiVersion": "^3",
         "remove": false,
         "secretsProvider": "",
